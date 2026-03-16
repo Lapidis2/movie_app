@@ -1,14 +1,16 @@
-import React, { Component } from 'react'
+import { Link } from 'expo-router'
+import React from 'react'
 import { Text, View } from 'react-native'
 
-export class index extends Component {
-  render() {
+const  Home=()=> {
+ 
     return (
       <View className='flex justify-center items-center h-screen'>
         <Text className='text-dark-200 text-lg font-bold'> Welcome! </Text>
+        <Link href="/movies">View Movies</Link>
       </View>
     )
   }
-}
 
-export default index
+
+export default Home
