@@ -3,9 +3,10 @@ import React from 'react'
 
 const Saved = () => {
   return (
-    <View>
-      <Text>Saved</Text>
-    </View>
+       <View className='flex justify-center items-center h-screen'>
+            <Text className='text-dark-200 text-lg font-bold'> Saved! </Text>
+         
+          </View>
   )
 }
 
