@@ -65,7 +65,7 @@ const SearchMovie = () => {
                 movies?.length > 0 && (
                   <Text className="text-white font-bold">
                     Search for {""}
-                    <Text className="text-accent">SEARCH TERM</Text>
+                    <Text className="text-accent">{searchedQuery}</Text>
                   </Text>
                 )}
             </View>

@@ -20,7 +20,7 @@ const Search = ({ onPress, placeholder,value,onChangeText }:searchProps) => {
     className='flex-1 ml-2 text-white'
     value={value}
     onPress={onPress}
-    onChangeText={()=>{}}
+    onChangeText={onChangeText}
    />
     </View>
   ) 
