@@ -3,8 +3,8 @@ import React from 'react'
 
 const Detail = () => {
   return (
-    <View>
-      <Text>Detail</Text>
+    <View className='bg-white h-screen justify-center items-center'>
+      <Text className='text-center'>Detail</Text>
     </View>
   )
 }

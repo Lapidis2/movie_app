@@ -6,6 +6,7 @@ import { View, Image, ScrollView, Text, ActivityIndicator, FlatList } from "reac
 import { useRouter } from "expo-router";
 import useFetch from "@/services/useFetch";
 import { getMovies } from "@/services/api";
+import MovieCard from "@/components/movieCard";
 const Index = () => {
   const router = useRouter();
   const {
@@ -47,13 +48,28 @@ const Index = () => {
           </View>
         )}
         <>
-        <Text className="text-lg text-white mb-5 mt-10 font-bold">Latest Movies</Text>
+        <Text className="text-lg text-white mb-10 mt-5 font-bold">Latest Movies</Text>
         <FlatList
         data={movies}
+        
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={3}
+        columnWrapperStyle={
+          {
+            justifyContent: 'space-between',
+            gap:15,
+       
+       marginBottom:10
+
+          }
+        }
         renderItem={({item})=>(
-          <Text className="text-white">{item.title}</Text>
+        <MovieCard
+        {...item}
+        />
 
         )
+        
       
       }
         />
