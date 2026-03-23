@@ -1,5 +1,5 @@
 import { View, Image, FlatList, Text, ActivityIndicator } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useFetch from "@/services/useFetch";
 import { getMovies } from "@/services/api";
 import Search from "@/components/Search";
@@ -12,11 +12,29 @@ const SearchMovie = () => {
   const {
     data: movies,
     loading: moviesLoading,
+    refetch:loadMovies,
+    reset,
     error: moviesError,
   } = useFetch(() =>
     getMovies({
       query: searchedQuery,
-    }));
+    }),false);
+
+useEffect(()=>{
+ const timeoutId=setTimeout(async()=>{
+  if(searchedQuery.trim()){
+    await loadMovies()
+  }
+  else{
+    reset()
+  }
+ },500
+ )
+ return ()=>clearTimeout(timeoutId)
+// eslint-disable-next-line react-hooks/exhaustive-deps
+},[searchedQuery])
+
+
   return (
     <View className="flex-1 bg-primary">
       <Image
