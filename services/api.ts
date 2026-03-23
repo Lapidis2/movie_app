@@ -11,7 +11,7 @@ Headers:{
 export const getMovies=async ({query}:{query:string})=>{
     const endpoint=
     query? `${TMDB_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(query)}`:
-    '/discover/movies?sort_by=popularity.desc';
+    `${TMDB_CONFIG.BASE_URL}/discover/movie?sort_by=popularity.desc`;
     const res=await fetch(endpoint,{
         method:'GET',
         headers:TMDB_CONFIG.Headers
