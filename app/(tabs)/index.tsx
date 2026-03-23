@@ -1,4 +1,4 @@
-import Search from "@/components/search";
+import Search from "@/components/Search";
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import React from "react";
@@ -6,7 +6,7 @@ import { View, Image, ScrollView, Text, ActivityIndicator, FlatList } from "reac
 import { useRouter } from "expo-router";
 import useFetch from "@/services/useFetch";
 import { getMovies } from "@/services/api";
-import MovieCard from "@/components/movieCard";
+import MovieCard from "@/components/MovieCard";
 const Index = () => {
   const router = useRouter();
   const {
