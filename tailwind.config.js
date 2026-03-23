@@ -11,7 +11,7 @@ module.exports = {
         colors: {
             "primary": "#030014",
             "secondary": "#0f0d23",
-            "accent": "#151312",
+            "accent":"#ab8bff",
           light:{
             100:'#D6C6FF',
             200:'#A8B5DB',
@@ -20,7 +20,8 @@ module.exports = {
           dark:{
             100:'#221f3d',
             200:'#0f0d23'
-          }
+          },
+         
         }
     },
   },
