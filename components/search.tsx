@@ -4,9 +4,9 @@ import { icons } from '@/constants/icons'
 
 interface searchProps {
   onPress?: () => void;
-  placeholder: string;
-  value:string;
-  onChangeText:(text:string)=>void
+  placeholder?: string;
+  value?:string;
+  onChangeText?:(text:string)=>void
 }
 
 

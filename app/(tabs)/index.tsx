@@ -7,8 +7,16 @@ import { useRouter } from "expo-router";
 import useFetch from "@/services/useFetch";
 import { getMovies } from "@/services/api";
 import MovieCard from "@/components/MovieCard";
+import { GetTrendingMovies } from "@/services/appwrite";
 const Index = () => {
   const router = useRouter();
+  const {
+    data:trendingMovies ,
+    loading: TrendingLoading,
+    error: TrendignError,
+  } = useFetch(() =>
+    GetTrendingMovies(),
+  );
   const {
     data: movies,
     loading: moviesLoading,
@@ -29,15 +37,15 @@ const Index = () => {
       >
         <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5  mx-auto" />
 
-        {moviesLoading ? (
+        {moviesLoading || TrendingLoading? (
           <ActivityIndicator
             size="large"
             color="#000"
             className="mt-10 self-center"
           />
-        ) : moviesError ? (
+        ) : moviesError||TrendignError ? (
           <Text className="text-red-500 text-center mt-10">
-            Error: {moviesError}
+            Error: {moviesError||TrendignError}
           </Text>
         ) : (
           <View className="flex-1 mt-5"> 
@@ -45,10 +53,35 @@ const Index = () => {
               onPress={() => router.push("/search")}
               placeholder="Search movie....."
             />
+
+
+            {trendingMovies&&(
+              <View className="mt-10">
+              <Text className="text-white text-lg font-bold mt-5 nb-3">
+                Trending Movies
+              </Text>
+              </View>
+            )
+            }
           </View>
         )}
         <>
         <Text className="text-lg text-white mb-10 mt-5 font-bold">Latest Movies</Text>
+        <FlatList
+        data={trendingMovies}
+        renderItem={({item,index})=>(
+          <Text className="text-white text-lg">
+            {item.title}
+          </Text>
+        )}
+        keyExtractor={(item)=>item.movie_id.toString()}
+        >
+
+
+        </FlatList>
+
+
+
         <FlatList
         data={movies}
         
@@ -72,7 +105,7 @@ const Index = () => {
         
       
       }
-        />
+        /> 
         </>
       </ScrollView>
     </View>

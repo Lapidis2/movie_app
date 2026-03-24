@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { View, Image, FlatList, Text, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import useFetch from "@/services/useFetch";
@@ -6,7 +7,7 @@ import Search from "@/components/Search";
 import { images } from "@/constants/images";
 import MovieCard from "@/components/MovieCard";
 import { icons } from "@/constants/icons";
-import { updateSearchCount } from "@/services/appwrite";
+import { UpdateSearchCount } from "@/services/appwrite";
 
 const SearchMovie = () => {
   const [searchedQuery,setsearchedQuery]=useState('')
@@ -21,23 +22,27 @@ const SearchMovie = () => {
       query: searchedQuery,
     }),false);
 
-useEffect(()=>{
- if (searchedQuery.trim() && movies && movies.length > 0) {
-    updateSearchCount(searchedQuery, movies[0]);
-  }
+useEffect(() => {
+  const timeoutId = setTimeout(async () => {
+    const trimmed = searchedQuery.trim();
 
- const timeoutId=setTimeout(async()=>{
-  if(searchedQuery.trim()){
-    await loadMovies()
+    if (trimmed.length >= 3) {
+      await loadMovies();
+    } else {
+      reset();
+    }
+  }, 500);
+
+  return () => clearTimeout(timeoutId);
+}, [searchedQuery]);
+
+useEffect(() => {
+  const trimmed = searchedQuery.trim();
+
+  if (trimmed.length >= 3 && movies?.length > 0) {
+    UpdateSearchCount(trimmed, movies[0]);
   }
-  else{
-    reset()
-  }
- },500
- )
- return ()=>clearTimeout(timeoutId)
-// eslint-disable-next-line react-hooks/exhaustive-deps
-},[searchedQuery])
+}, [movies]); 
 
 
   return (
