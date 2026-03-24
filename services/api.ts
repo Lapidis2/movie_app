@@ -25,3 +25,21 @@ export const getMovies=async ({query}:{query:string})=>{
 
 
 } 
+
+export const  movieDetails=async(movieId:string):Promise<MovieDetails>=>{
+    try {
+        const res=await fetch(`${TMDB_CONFIG.BASE_URL}/movie/${movieId}?api_key=${TMDB_CONFIG.API_KEY}`,{
+            method:'GET',
+            headers:TMDB_CONFIG.Headers
+        });
+        if(!res.ok){
+            throw new Error('failed to fetch movie details')
+        }
+        const data=await res.json();
+        return data;
+        
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
