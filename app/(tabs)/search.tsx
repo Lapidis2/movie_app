@@ -6,6 +6,7 @@ import Search from "@/components/Search";
 import { images } from "@/constants/images";
 import MovieCard from "@/components/MovieCard";
 import { icons } from "@/constants/icons";
+import { updateSearchCount } from "@/services/appwrite";
 
 const SearchMovie = () => {
   const [searchedQuery,setsearchedQuery]=useState('')
@@ -21,6 +22,10 @@ const SearchMovie = () => {
     }),false);
 
 useEffect(()=>{
+ if (searchedQuery.trim() && movies && movies.length > 0) {
+    updateSearchCount(searchedQuery, movies[0]);
+  }
+
  const timeoutId=setTimeout(async()=>{
   if(searchedQuery.trim()){
     await loadMovies()
@@ -88,6 +93,15 @@ useEffect(()=>{
                 )}
             </View>
           </>
+        }
+        ListEmptyComponent={
+          !moviesLoading&&!moviesError?(
+            <View className="mt-10 px-5">
+              <Text className="text-white text-center ">
+                {searchedQuery.trim()?'No movies found.Please search Again!':'Search A movie'}
+              </Text>
+            </View>
+          ):null
         }
       />
     </View>
