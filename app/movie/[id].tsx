@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
 import React from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import useFetch from "@/services/useFetch";
@@ -29,6 +29,13 @@ const MovieInfo=({label,value}:movieInfoProps)=>(
 const Detail = () => {
   const { id } = useLocalSearchParams();
   const { data: movie, loading } = useFetch(() => movieDetails(id as string));
+  if (loading) {
+  return (
+    <View className="flex-1 justify-center items-center bg-primary">
+      <ActivityIndicator size="large" color="#fff" />
+    </View>
+  );
+}
   return (
     <View className="bg-primary flex-1">
       <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
@@ -48,7 +55,7 @@ const Detail = () => {
               </Text>
               <Text className="text-light-200 text-sm ">{movie?.runtime}m</Text>
             </View>
-            <View className="flex-row items-center bg-dark-100 px-2 py-1 rounded-md gap-x-1 mt-r">
+            <View className="flex-row items-center bg-dark-100 px-2 py-1 rounded-md gap-x-1 mt-2">
               <Image source={icons.star} className="size-4"/>
               <Text className="text-white font-bold text-sm">
                     {Math.round(movie?.vote_average??0)}/10  
@@ -61,11 +68,23 @@ const Detail = () => {
             <MovieInfo label="Genres" value={movie?.genres?.map((g)=>g.name).join(' - ')|| 'N/A'}/>
               <View className="flex-row justify-between w-1/2">
               
-               <MovieInfo label="Budget" value={`$${movie?.budget / 1_000_000}M`}/>
-              <MovieInfo label="Revenue" value={`$${Math.round(movie?.revenue) / 1_000_000}M`}/>
+               <MovieInfo label="Budget"   value={
+    movie?.budget 
+      ? `$${(movie.budget / 1_000_000).toFixed(1)}M`
+      : "N/A"
+  }/>
+              <MovieInfo label="Revenue"  value={
+    movie?.revenue
+      ? `$${(movie.revenue / 1_000_000).toFixed(1)}M`
+      : "N/A"
+  }/>
 
               </View>
-               <MovieInfo label="Production Companies" value={movie?.production_companies.map((camp)=>camp.name).join(' - ')||'N/A'}/>
+               <MovieInfo label="Production Companies" value={
+  movie?.production_companies
+    ?.map((camp) => camp.name)
+    .join(" - ") || "N/A"
+}/>
 
 
           </View>
